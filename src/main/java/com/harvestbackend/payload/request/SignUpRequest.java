@@ -12,6 +12,10 @@ import java.util.Set;
 @Setter
 public class SignUpRequest {
     @NotBlank
+    private String firstName;
+    @NotBlank
+    private String lastName;
+    @NotBlank
     @Size(min = 3, max = 20)
     private String username;
 
@@ -27,13 +31,7 @@ public class SignUpRequest {
     private String password;
 
 
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
-    @NotBlank
-    private String address;
 
-    private String profileImage;
+
 
     }

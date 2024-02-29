@@ -125,15 +125,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestParam("signUpRequest1") String signUpRequest1 , @RequestParam(name = "profile") MultipartFile profile) {
-       SignUpRequest signUpRequest =null;
-        try {
-                signUpRequest = objectMapper.readValue( signUpRequest1 ,SignUpRequest.class);
-
-        }catch (JsonProcessingException e){
-            return ResponseEntity.badRequest().body(new MessageResponse("invalid user"));
-
-        }
+    public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest ) {
+//       SignUpRequest signUpRequest =null;
+//        try {
+//                signUpRequest = objectMapper.readValue( signUpRequest1 ,SignUpRequest.class);
+//
+//        }catch (JsonProcessingException e){
+//            return ResponseEntity.badRequest().body(new MessageResponse("invalid user"));
+//
+//        }
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken"));
         }
@@ -174,22 +174,24 @@ public class AuthController {
         user.setRoles(roles);
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
-        user.setAddress(signUpRequest.getAddress());
+//        user.setAddress(signUpRequest.getAddress());
+
        User user1 = userRepository.save(user);
-        String imgUrl;
 
-        try {
-           Map upload = this.cloudinaryImageService.upload(profile);
-           imgUrl = (String) upload.get("url");
-        }
-       catch (IOException e){
-           throw new RuntimeException("error in uploading !!");
-       }
-        user1.setProfileImage(imgUrl);
-        userRepository.save(user1);
+//        String imgUrl;
+//
+//        try {
+//           Map upload = this.cloudinaryImageService.upload(profile);
+//           imgUrl = (String) upload.get("url");
+//        }
+//       catch (IOException e){
+//           throw new RuntimeException("error in uploading !!");
+//       }
+//        user1.setProfileImage(imgUrl);
+//        userRepository.save(user1);
 
 
-        return ResponseEntity.ok(new MessageResponse("User is registered successfully" +imgUrl));
+        return ResponseEntity.ok(new MessageResponse("User is registered successfully" ));
     }
 
 
