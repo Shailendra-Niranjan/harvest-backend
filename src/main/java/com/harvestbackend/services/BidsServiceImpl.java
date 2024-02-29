@@ -37,20 +37,20 @@ public class BidsServiceImpl implements BidsService {
         if(price<product.getStartingBid()){
             return "price must  be greater than starting bid  ";
         }
-
+        if(price<=(product.getTopBid()+product.getIncrment())){
+            return "price must be greater than top bid + "+product.getIncrment();
+        }
         if(!user.getUsername().equals(farmer.getUser().getUsername())){
+            product.setTopBid(price);
             bids.setPrice(price);
             bids.setUser(user);
             bids.setFarmer(farmer);
-            bids.setProduct(product);
+            bids.setProduct(productRepository.save(product));
             bids.setDate(new Date());
-          Bids bids1 =  bidsRepository.save(bids);
-
+            Bids bids1 =  bidsRepository.save(bids);
             return  "Bid on product "+ product.getName() +" farmer" +farmer.getUser().getFirstName();
         }
-
         return  "you can't bid on own product";
-
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -149,18 +150,15 @@ public class ProductServiceImpl implements ProductService {
         product.setDisplayPic3(displaypic3url);
         product.setType(type);
         product.setWtype(WType);
-//        product.setWeight(weightType);
         String  userDetails1 = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(userDetails1).orElseThrow(() -> new RuntimeException("User not found"+ userDetails1));
         if(user.getIsFarmer()){
             Product product1  =    productRepository.save(product);
             Farmer farmer = farmerRepository.findByUser(user);
-
             product1.setFarmer(farmer);
             product1.setPostDate(new Date());
             productRepository.save(product1);
             return "product are added ";
-
         }
         return "user  are  not able to add product ";
     }
@@ -194,7 +192,18 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-
+    public List<Product> getTopProducts(int limit) {
+        Pageable pageable = PageRequest.of(0, limit); // Create a Pageable object with limit
+        return productRepository.findAll(pageable).getContent(); // Retrieve the content of the first page
+    }
+    public List<Product> getTopProductsByLowestPrice(int limit) {
+        Pageable pageable = PageRequest.of(0, limit, Sort.by("topBid"));
+        return productRepository.findAll(pageable).getContent();
+    }
+    public List<Product> getAllProductByPageForm(int pageNumber , int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber , pageSize);
+        return productRepository.findAll(pageable).getContent();
+    }
 
 
 //    public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/webappimages";

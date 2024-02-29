@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(@RequestParam(name = "pageNumber" , defaultValue = "0") int pageNumber , @RequestParam(name = "pageSize" , defaultValue = "10") int pageSize) {
+        return productServiceimpl.getAllProductByPageForm(pageNumber , pageSize);
     }
 
     @GetMapping("/products/{id}")
@@ -66,6 +67,17 @@ public class ProductController {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Product> products = productServiceimpl.searchByTypeAndNames(type, name,pageable);
         return ResponseEntity.ok(products.getContent());
+    }
+
+
+    @GetMapping("/top-products")
+    public List<Product> getTopProducts(@RequestParam(name = "limit", defaultValue = "6") Integer limit) {
+        return productServiceimpl.getTopProducts(limit);
+    }
+
+    @GetMapping("/cheap-product")
+    public List<Product> getTopProductsByLowestPrice(@RequestParam(name = "limit", defaultValue = "6") int limit) {
+        return productServiceimpl.getTopProductsByLowestPrice(limit);
     }
 
 

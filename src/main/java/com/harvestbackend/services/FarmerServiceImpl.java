@@ -34,7 +34,7 @@ public class FarmerServiceImpl implements FarmerService {
         User user = userRepository.findByUsername(userDetails1).orElseThrow(() -> new RuntimeException("User not found"+ userDetails1));
         user.setIsFarmer(true);
         Farmer farmer = new Farmer();
-      User user1  = userRepository.save(user);
+         User user1  = userRepository.save(user);
         farmer.setUser(user1);
         farmer.setEarning(farmerSignUpRequest.getEarning());
 

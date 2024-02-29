@@ -31,7 +31,6 @@ public class ProductRequest {
     private String soilType;
 
     private Integer startingBid;
-//    private Integer topBid;
 
     private String description;
 
