@@ -59,7 +59,6 @@ public class ProductServiceImpl implements ProductService {
         Wtype WType ;
 
         try {
-//           product = objectMapper.readValue(productRequest , Product.class);
             ProductRequest productRequest1 = objectMapper.readValue(productRequest , ProductRequest.class);
             product = convertToProduct(productRequest1);
             String etype = productRequest1.getType().toUpperCase();
@@ -203,6 +202,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProductByPageForm(int pageNumber , int pageSize){
         Pageable pageable = PageRequest.of(pageNumber , pageSize);
         return productRepository.findAll(pageable).getContent();
+    }
+    public String deleteProduct(Long id){
+        Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("product are not found by id "+id));
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("user are not found by user name  "+username));
+        Farmer farmer = farmerRepository.findByUser(user);
+        if(!user.getIsFarmer()){
+            return "user are not able to delete product and upload product !  ";
+        }
+        if (product.getFarmer().equals(farmer)){
+           productRepository.delete(product);
+        }
+        return "farmer are not able to delete other farmer product";
     }
 
 

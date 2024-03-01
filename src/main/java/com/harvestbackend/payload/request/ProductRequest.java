@@ -31,6 +31,7 @@ public class ProductRequest {
     private String soilType;
 
     private Integer startingBid;
+    private Integer increment;
 
     private String description;
 

@@ -33,7 +33,7 @@ public class Product {
     private String soilType;
     private Integer startingBid;
     private Integer topBid;
-    private Integer incrment = 100;
+    private Integer increment ;
     @ManyToOne
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;

@@ -37,8 +37,8 @@ public class BidsServiceImpl implements BidsService {
         if(price<product.getStartingBid()){
             return "price must  be greater than starting bid  ";
         }
-        if(price<=(product.getTopBid()+product.getIncrment())){
-            return "price must be greater than top bid + "+product.getIncrment();
+        if(price<=(product.getTopBid()+product.getIncrement())){
+            return "price must be greater than  + "+(product.getTopBid() + product.getIncrement());
         }
         if(!user.getUsername().equals(farmer.getUser().getUsername())){
             product.setTopBid(price);
@@ -74,5 +74,15 @@ public class BidsServiceImpl implements BidsService {
             return bids1;
         }
         return new Bids();
+    }
+    public String deleteBid(Long id){
+        Bids bids = bidsRepository.findById(id).orElseThrow(()->new RuntimeException("bids are not found"));
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(userName).orElseThrow(()->new RuntimeException("user not found "));
+        if(bids.getUser().equals(user)){
+            bidsRepository.delete(bids);
+        }
+        return "you are not able to delete other user bids";
+
     }
 }

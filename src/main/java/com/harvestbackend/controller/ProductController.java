@@ -79,6 +79,10 @@ public class ProductController {
     public List<Product> getTopProductsByLowestPrice(@RequestParam(name = "limit", defaultValue = "6") int limit) {
         return productServiceimpl.getTopProductsByLowestPrice(limit);
     }
-
+    @GetMapping("/delete-product")
+    public ResponseEntity<String > deleteProduct(@RequestParam(name = "productId") Long productId){
+        String  res = productServiceimpl.deleteProduct(productId);
+        return ResponseEntity.ok(res);
+    }
 
 }
