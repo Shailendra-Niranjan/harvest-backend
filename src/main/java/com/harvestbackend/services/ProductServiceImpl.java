@@ -33,7 +33,8 @@ public class ProductServiceImpl implements ProductService {
     FarmerRepository farmerRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    BidsServiceImpl bidsServiceImpl;
     public  Product convertToProduct(ProductRequest productRequest) {
         Product product = new Product();
         product.setName(productRequest.getName());
@@ -213,6 +214,7 @@ public class ProductServiceImpl implements ProductService {
             return "user are not able to delete product and upload product !  ";
         }
         if (product.getFarmer().equals(farmer)){
+            bidsServiceImpl.deletAllBidsRelatedThatProduct(product);
            productRepository.delete(product);
         }
         return "farmer are not able to delete other farmer product";
