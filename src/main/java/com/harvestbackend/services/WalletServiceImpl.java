@@ -19,36 +19,36 @@ public class WalletServiceImpl implements WalletService {
     UserRepository userRepository;
 
     @Override
-    public String addMoney(Integer Money) {
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"+ userDetails.getUsername()));
-//        Wallet wallet = new Wallet();
-//        wallet.setBalance(Money);
-//        wallet.setUser(user);
-//
-//        walletRepository.save(wallet);
-
-        return null;
-    }
-
-    @Override
-    public String updateMoney(Integer Money) {
+    public Double updateMoney(Double Money) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"+ userDetails.getUsername()));
         Optional<Wallet> wallet = walletRepository.findByUser(user);
         if(wallet.isPresent()){
             wallet.get().setBalance( wallet.get().getBalance()+Money);
             walletRepository.save(wallet.get());
-            return "money are added to wallet by user"+userDetails.getUsername();
         }
         else {
             Wallet wallet1 = new Wallet();
             wallet1.setBalance(Money);
             wallet1.setUser(user);
             walletRepository.save(wallet1);
-            return "money are added to wallet by user"+userDetails.getUsername();
-
         }
-//        return "there is some problem in updating money";
+        return getMoney();
+    }
+
+    public Double getMoney() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"+ userDetails.getUsername()));
+        Optional<Wallet> wallet = walletRepository.findByUser(user);
+        if (wallet.isPresent()) {
+            return wallet.get().getBalance();
+        }
+        else {
+            Wallet wallet1 = new Wallet();
+            wallet1.setBalance(0.0);
+            wallet1.setUser(user);
+            walletRepository.save(wallet1);
+            return walletRepository.findByUser(user).get().getBalance();
+        }
     }
 }

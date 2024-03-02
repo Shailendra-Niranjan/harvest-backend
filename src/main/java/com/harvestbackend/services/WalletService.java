@@ -1,7 +1,9 @@
 package com.harvestbackend.services;
 
-public interface WalletService {
-    String addMoney(Integer Money);
-    String updateMoney(Integer Money);
+import com.harvestbackend.model.Wallet;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
+public interface WalletService {
+    Double updateMoney(Double Money);
+    Double getMoney();
 }

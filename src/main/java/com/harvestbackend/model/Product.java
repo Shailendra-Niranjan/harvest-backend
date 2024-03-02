@@ -23,7 +23,7 @@ public class Product {
     private Integer weight;
     @Enumerated(EnumType.STRING)
     private Wtype Wtype;
-    private Date harvestdate;
+    private Date harvestDate;
     private Date postDate;
     private Date expiryDate;
     private String city;
@@ -54,7 +54,7 @@ public class Product {
         this.type = type;
         this.weight = weight;
         this.Wtype = Wtype;
-        this.harvestdate = date;
+        this.harvestDate = date;
         this.postDate = postDate;
         this.expiryDate = expiryDate;
         this.city = city;

@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
 //        product.setType(EType.valueOf(productRequest.getType()));
         product.setWeight(productRequest.getWeight());
 //        product.setWeightType(weightType.valueOf(productRequest.getWeightType()));
-        product.setHarvestdate(productRequest.getHarvestdate());
+        product.setHarvestDate(productRequest.getHarvestDate());
         product.setExpiryDate(productRequest.getExpiryDate());
         product.setCity(productRequest.getCity());
         product.setState(productRequest.getState());
@@ -48,7 +48,8 @@ public class ProductServiceImpl implements ProductService {
         product.setTemperature(productRequest.getTemperature());
         product.setSoilType(productRequest.getSoilType());
         product.setStartingBid(productRequest.getStartingBid());
-//        product.setTopBid(productRequest.getTopBid());
+        product.setIncrement(productRequest.getIncrement());
+        product.setTopBid(productRequest.getStartingBid());
         product.setDescription(productRequest.getDescription());
         return product;
     }

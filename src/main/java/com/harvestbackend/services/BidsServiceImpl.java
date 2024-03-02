@@ -48,6 +48,7 @@ public class BidsServiceImpl implements BidsService {
             bids.setProduct(productRepository.save(product));
             bids.setDate(new Date());
             Bids bids1 =  bidsRepository.save(bids);
+            productRepository.save(product);
             return  "Bid on product "+ product.getName() +" farmer" +farmer.getUser().getFirstName();
         }
         return  "you can't bid on own product";

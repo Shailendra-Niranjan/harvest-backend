@@ -41,7 +41,7 @@ public class UserController {
         return ResponseEntity.ok(res);
     }
     @PostMapping("/updateprofilepic")
-    ResponseEntity<String> updateUserProfilePic( @RequestParam(name = "profilePic") MultipartFile profilePic){
+    ResponseEntity<String> updateUserProfilePic(@RequestParam(name = "profilePic") MultipartFile profilePic){
         String res = userService.updateProfilePic(profilePic);
         return ResponseEntity.ok(res);
     }

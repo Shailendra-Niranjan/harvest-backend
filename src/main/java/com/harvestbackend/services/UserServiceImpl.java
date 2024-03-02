@@ -25,15 +25,14 @@ public class UserServiceImpl implements UserService {
     public String updateUser(UpdateUserRequest updateUserRequest) {
         String  userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(userName).orElseThrow(()->new RuntimeException("user not found "+ userName));
-        if(userRepository.existsByEmail(updateUserRequest.getEmail())){
-            return "email already exist please change it";
-        }
         user.setFirstName(updateUserRequest.getFirstName());
         user.setLastName(updateUserRequest.getLastName());
-        user.setAddress(updateUserRequest.getAddress());
+        user.setAddress1(updateUserRequest.getAddress1());
+        user.setAddress2(updateUserRequest.getAddress2());
+        user.setCity(updateUserRequest.getCity());
+        user.setState(updateUserRequest.getState());
         user.setEmail(updateUserRequest.getEmail());
         userRepository.save(user);
-
         return "update successfully !!";
     }
 

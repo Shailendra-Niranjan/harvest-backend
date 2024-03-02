@@ -18,7 +18,7 @@ public class ProductRequest {
 
     private String  weightType;
 
-    private Date harvestdate;
+    private Date harvestDate;
 
     private Date expiryDate;
 

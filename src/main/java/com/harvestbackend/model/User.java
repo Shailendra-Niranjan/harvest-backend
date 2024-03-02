@@ -43,7 +43,10 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String address;
+    private String address1;
+    private String address2;
+    private String city;
+    private String state;
     @Lob
     private String profileImage;
 

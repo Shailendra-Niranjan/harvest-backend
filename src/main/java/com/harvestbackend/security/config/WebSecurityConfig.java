@@ -73,6 +73,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                         auth.requestMatchers("/api/auth/**" ).permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/cloud/upload/**").permitAll()
+                                .requestMatchers("/product/**").permitAll()
+                                .requestMatchers("/product/delete-product").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults());

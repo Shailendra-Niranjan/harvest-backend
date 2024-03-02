@@ -58,7 +58,7 @@ public class ProductController {
         List<Product> res = productService.searchByTypeAndName(type ,pname);
         return ResponseEntity.ok(res);
     }
-    @GetMapping("/sreacrhproductspagging")
+    @GetMapping("/searchproductspaging")
     public ResponseEntity<List<Product>> searchProducts(
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "name", required = false) String name,

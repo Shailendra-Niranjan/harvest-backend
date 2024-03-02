@@ -16,7 +16,7 @@ public class Wallet {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    private double balance;
+    private Double balance;
 
     // Constructors
     public Wallet() {
