@@ -214,8 +214,9 @@ public class ProductServiceImpl implements ProductService {
             return "user are not able to delete product and upload product !  ";
         }
         if (product.getFarmer().equals(farmer)){
-            bidsServiceImpl.deletAllBidsRelatedThatProduct(product);
+           bidsServiceImpl.deletAllBidsRelatedThatProduct(product);
            productRepository.delete(product);
+           return "farmer delete our product successfully !";
         }
         return "farmer are not able to delete other farmer product";
     }

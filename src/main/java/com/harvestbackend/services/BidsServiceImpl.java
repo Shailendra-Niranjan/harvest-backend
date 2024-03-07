@@ -90,7 +90,7 @@ public class BidsServiceImpl implements BidsService {
     public String deletAllBidsRelatedThatProduct(Product product){
         List<Bids> res = bidsRepository.findByProduct(product);
         try{
-            bidsRepository.deleteByProductIn(res);
+            bidsRepository.deleteAll(res);
 
         }catch (Exception e ){
             return "some problem in deleting list of bids of that product";
