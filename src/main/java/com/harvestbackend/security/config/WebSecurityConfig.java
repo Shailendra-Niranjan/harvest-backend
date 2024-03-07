@@ -75,6 +75,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                                 .requestMatchers("/cloud/upload/**").permitAll()
                                 .requestMatchers("/product/**").permitAll()
                                 .requestMatchers("/product/delete-product").authenticated()
+                                .requestMatchers("/bids/topbid/*").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults());

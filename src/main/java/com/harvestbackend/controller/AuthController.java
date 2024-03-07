@@ -98,9 +98,9 @@ public class AuthController {
                 .collect(Collectors.toList());
         refreshTokenService.deleteByUserId(userDetails.getId());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
+        User user = userRepository.findByUsername(userDetails.getUsername()).get();
         return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(),
-                userDetails.getEmail(), roles));
+                userDetails.getEmail(), roles, user.getIsFarmer()));
 
     }
 

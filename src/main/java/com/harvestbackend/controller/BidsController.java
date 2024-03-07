@@ -21,6 +21,11 @@ public class BidsController {
         return ResponseEntity.ok(bids);
     }
 
+    @GetMapping("/topbid/{id}")
+    ResponseEntity<Bids> getTopBid(@PathVariable Long id) {
+        return ResponseEntity.ok(bidsService.getTopBid(id));
+    }
+
     @PostMapping("/updatebid")
     ResponseEntity<Bids> updateBids(@RequestParam(name = "price") int price , @RequestParam(name = "bid_id") Long bid_id){
         Bids bids = bidsService.updateBid(price ,bid_id);

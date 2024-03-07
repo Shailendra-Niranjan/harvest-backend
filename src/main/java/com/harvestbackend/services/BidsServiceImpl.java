@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,12 @@ public class BidsServiceImpl implements BidsService {
         User user = userRepository.findByUsername(userDetails1).orElseThrow(() -> new RuntimeException("User not found"+ userDetails1));
         List<Bids> res = bidsRepository.findByUser(user);
         return res;
+    }
+
+    public Bids getTopBid(Long id) {
+        Product product = productRepository.findProductById(id).orElseThrow();
+        List<Bids> bids = bidsRepository.findByProduct(product).stream().sorted(Comparator.comparing(Bids::getPrice).reversed()).toList();
+        return bids.isEmpty() ? null : bids.get(0);
     }
 
     @Override

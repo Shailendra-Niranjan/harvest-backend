@@ -9,13 +9,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product , Long> {
 
+    Optional<Product> findProductById(Long id);
 
     List<Product> findByType(EType type);
-
+    List<Product> findAllByExpiryDateBefore(Date date);
     List<Product> findByNameContainingIgnoreCase(String name);
 
     @Query("SELECT p FROM Product p WHERE p.type = :type AND LOWER(p.name) LIKE %:name%")

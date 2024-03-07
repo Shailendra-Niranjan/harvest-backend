@@ -10,5 +10,6 @@ public interface BidsService {
 
     String  createBids(int price , Long product_id);
     List<Bids> getAllBidOfUser();
+    Bids getTopBid(Long id);
     Bids updateBid(int price , Long bids_id);
 }

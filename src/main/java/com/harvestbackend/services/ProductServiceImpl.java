@@ -7,11 +7,13 @@ import com.harvestbackend.payload.request.ProductRequest;
 import com.harvestbackend.repository.FarmerRepository;
 import com.harvestbackend.repository.ProductRepository;
 import com.harvestbackend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +37,10 @@ public class ProductServiceImpl implements ProductService {
     UserRepository userRepository;
     @Autowired
     BidsServiceImpl bidsServiceImpl;
+    @Autowired
+    EmailService emailService;
+    @Autowired
+    WalletService walletService;
     public  Product convertToProduct(ProductRequest productRequest) {
         Product product = new Product();
         product.setName(productRequest.getName());
@@ -219,6 +225,25 @@ public class ProductServiceImpl implements ProductService {
            return "farmer delete our product successfully !";
         }
         return "farmer are not able to delete other farmer product";
+    }
+
+    @Transactional
+    @Scheduled(fixedRate = 60000)
+    public void endBid() {
+        List<Product> products = productRepository.findAllByExpiryDateBefore(new Date());
+        products.forEach(i -> {
+            Bids bids = bidsServiceImpl.getTopBid(i.getId());
+            if (bids != null) {
+                User user = bids.getUser();
+                if (!emailService.validateEmail(user.getEmail())) {
+                    return;
+                }
+                Double price = (double) -bids.getPrice();
+                walletService.updateMoneyForUser(user, price);
+                String message = String.format("Your bid was successful for product %s with amount %d deducted from your account", i.getName(), bids.getPrice());
+                emailService.sendMail("Your bid was successfully processed", user.getEmail(),message);
+            }
+        });
     }
 
 

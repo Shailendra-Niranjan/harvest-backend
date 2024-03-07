@@ -51,4 +51,33 @@ public class WalletServiceImpl implements WalletService {
             return walletRepository.findByUser(user).get().getBalance();
         }
     }
+
+    @Override
+    public Wallet getWalletForUser(User user) {
+        Optional<Wallet> wallet = walletRepository.findByUser(user);
+        if (wallet.isPresent()) {
+            return wallet.get();
+        }
+        else {
+            Wallet wallet1 = new Wallet();
+            wallet1.setBalance(0.0);
+            wallet1.setUser(user);
+            return walletRepository.save(wallet1);
+        }
+    }
+
+    @Override
+    public Wallet updateMoneyForUser(User user, Double Money) {
+        Optional<Wallet> wallet = walletRepository.findByUser(user);
+        if(wallet.isPresent()){
+            wallet.get().setBalance( wallet.get().getBalance()+Money);
+            return walletRepository.save(wallet.get());
+        }
+        else {
+            Wallet wallet1 = new Wallet();
+            wallet1.setBalance(Money);
+            wallet1.setUser(user);
+            return  walletRepository.save(wallet1);
+        }
+    }
 }
