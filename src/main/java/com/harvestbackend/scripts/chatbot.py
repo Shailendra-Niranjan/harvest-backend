@@ -3,10 +3,10 @@ import argparse
 import ast
 from openai import Client
 
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = ''
 os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 client = Client()
-OPENAI_ASSISTANT_ID = 'asst_l7NAbxalUsp3McxOQ0wP3Uv6'
+OPENAI_ASSISTANT_ID = ''
 MODEL = 'gpt-3.5-turbo'
 NAME = 'Harvest Chatbot'
 INSTRUCTIONS = ('You are a chatbot for an agricultural product bidding website that helps users with navigating the '
