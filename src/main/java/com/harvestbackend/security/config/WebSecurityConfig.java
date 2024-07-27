@@ -76,6 +76,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                                 .requestMatchers("/product/**").permitAll()
                                 .requestMatchers("/product/delete-product").authenticated()
                                 .requestMatchers("/bids/topbid/*").permitAll()
+                                .requestMatchers("/chatbot/response").permitAll()
+                                .requestMatchers("/predict/*").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults());

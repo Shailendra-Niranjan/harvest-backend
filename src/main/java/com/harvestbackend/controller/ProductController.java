@@ -1,5 +1,6 @@
 package com.harvestbackend.controller;
 
+import com.harvestbackend.model.EType;
 import com.harvestbackend.model.Product;
 import com.harvestbackend.payload.request.FarmerSignUpRequest;
 import com.harvestbackend.payload.request.ProductRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -83,6 +85,16 @@ public class ProductController {
     public ResponseEntity<String > deleteProduct(@RequestParam(name = "productId") Long productId){
         String  res = productServiceimpl.deleteProduct(productId);
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<?> getCategories() {
+        return ResponseEntity.ok(EType.values());
+    }
+
+    @GetMapping("/weights/{type}")
+    public ResponseEntity<?> weightTypeForType(@PathVariable String type) {
+        return ResponseEntity.ok(productServiceimpl.weightTypeForType(type));
     }
 
 }

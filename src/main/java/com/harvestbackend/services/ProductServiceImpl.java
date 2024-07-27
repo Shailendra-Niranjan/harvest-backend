@@ -60,6 +60,15 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(productRequest.getDescription());
         return product;
     }
+
+    public String weightTypeForType(String type) {
+//        return switch (type) {
+//            case "WHEAT", "CORN", "RICE" -> Wtype.TONNE.name();
+//            default -> Wtype.KILOGRAM.name();
+//        };
+        return "KILOGRAM";
+    }
+
     @Override
     public String saveProduct(String productRequest, MultipartFile thumbnail, MultipartFile displaypic1, MultipartFile displaypic2, MultipartFile displaypic3) throws IOException {
         Product product = null;
@@ -87,41 +96,23 @@ public class ProductServiceImpl implements ProductService {
             }
 
             switch (etype){
-                case "FRUIT":
-                    type = EType.FRUIT;
+                case "CORN":
+                    type = EType.CORN;
                     break;
-                case "VEGETABLE":
-                    type = EType.VEGETABLE;
+                case "SUGAR":
+                    type = EType.SUGAR;
                     break;
-                case "SPICE":
-                    type = EType.SPICE;
+                case "WHEAT":
+                    type = EType.WHEAT;
                     break;
-                case "GRAIN":
-                    type = EType.GRAIN;
+                case "RICE":
+                    type = EType.RICE;
                     break;
-                case "FLOWER":
-                    type = EType.FLOWER;
+                case "BANANAS":
+                    type = EType.BANANAS;
                     break;
-                case "HERB":
-                    type = EType.HERB;
-                    break;
-                case "NUT":
-                    type = EType.NUT;
-                    break;
-                case "LEGUME":
-                    type = EType.LEGUME;
-                    break;
-                case "TUBER":
-                    type = EType.TUBER;
-                    break;
-                case "ROOT_VEGETABLE":
-                    type = EType.ROOT_VEGETABLE;
-                    break;
-                case "GREENS":
-                    type = EType.GREENS;
-                    break;
-                case "MUSHROOM":
-                    type = EType.MUSHROOM;
+                case "ORANGES":
+                    type = EType.ORANGES;
                     break;
                 default:
                     type = EType.OTHER;;
@@ -187,16 +178,15 @@ public class ProductServiceImpl implements ProductService {
         // Convert the type string to uppercase to match enum values
         String uppercaseType = type.toUpperCase();
         // Map the uppercase type string to the corresponding EType enum
-        switch (uppercaseType) {
-            case "FRUIT":
-                return EType.FRUIT;
-            case "GRAIN":
-                return EType.GRAIN;
-            case "VEGETABLE":
-                return EType.VEGETABLE;
-            default:
-                return EType.OTHER;
-        }
+        return switch (uppercaseType) {
+            case "CORN" -> EType.CORN;
+            case "SUGAR" -> EType.SUGAR;
+            case "WHEAT" -> EType.WHEAT;
+            case "RICE" -> EType.RICE;
+            case "ORANGES" -> EType.ORANGES;
+            case "BANANAS" -> EType.BANANAS;
+            default -> EType.OTHER;
+        };
     }
 
     public List<Product> getTopProducts(int limit) {
